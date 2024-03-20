@@ -1,5 +1,6 @@
 import Job from "../models/jobModel.js";
 import { StatusCodes } from "http-status-codes";
+import { NotFoundError } from "../customErrors.js";
 
 export const getAllJobs = async (req, res) => {
   const jobs = await Job.find({});
@@ -16,10 +17,8 @@ export const createJob = async (req, res) => {
 export const getJob = async (req, res) => {
   const { id } = req.params;
   const job = await Job.findById(id);
-  if (!job) {
-    throw new Error("no job with that id");
-    return res.status(404).json({ msg: `no job with id ${id}` });
-  }
+
+  if (!job) throw new NotFoundError(`no job with id : ${id}`);
   res.status(StatusCodes.OK).json({ job });
 };
 
@@ -46,3 +45,7 @@ export const deleteJob = async (req, res) => {
   }
   res.status(StatusCodes.OK).json({ job: removedJob });
 };
+
+import errorHandlerMiddleware from "./middleware/errorHandlerMiddleware.js";
+
+app.use(errorHandlerMiddleware);
