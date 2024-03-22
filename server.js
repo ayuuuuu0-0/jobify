@@ -1,10 +1,17 @@
+import "express-async-errors";
 import * as dotenv from "dotenv";
 dotenv.config();
 import express from "express";
 const app = express();
 import morgan from "morgan";
-import jobRouter from "./routes/jobRouter.js";
 import mongoose from "mongoose";
+import { body, validationResult } from "express-validator";
+
+//routers
+import jobRouter from "./routes/jobRouter.js";
+
+//middleware
+import errorHandlerMiddleware from "./middleware/errorHandleMiddleware.js";
 
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
@@ -16,10 +23,19 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/", (req, res) => {
-  console.log(req);
-  res.json({ message: "Data received", data: req.body });
-});
+app.post(
+  "/api/v1/test",
+  [body("name").notEmpty().withMessage("name is required")],
+  (req, res, next) => {
+    const errors = validationResult(req);
+    console.log(errors);
+    next();
+  },
+  (req, res) => {
+    const { name } = req.body;
+    res.json({ message: `hello ${name}` });
+  }
+);
 
 app.use("/api/v1/jobs", jobRouter);
 
@@ -27,10 +43,7 @@ app.use("*", (req, res) => {
   res.status(404).json({ msg: "not found" });
 });
 
-app.use((err, req, res, next) => {
-  console.log(err);
-  res.status(500).json({ msg: "something went wrong" });
-});
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 5100;
 
