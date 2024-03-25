@@ -1,0 +1,19 @@
+export const JOB_STATUS = {
+  PENDING: "pending",
+  INTERVIEW: "interview",
+  DECLINED: "declined",
+};
+
+export const JOB_TYPE = {
+  FULL_TIME: "full-time",
+  PART_TIME: "part-time",
+  INTERNSHIP: "internship",
+  REMOTE: "remote",
+};
+
+export const JOB_STATUS_SORT_BY = {
+  NEWEST_FIRST: "newest-first",
+  OLDEST_FIRST: "oldest-first",
+  ASCENDING: "a-z",
+  DESCENDING: "z-a",
+};
