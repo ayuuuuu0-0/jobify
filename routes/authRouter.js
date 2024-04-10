@@ -8,6 +8,6 @@ import {
 } from "../middleware/validationMiddleware.js";
 
 router.post("/register", validateRegisterInput, register);
-router.post("/login", login);
+router.post("/login", validateLoginInput, login);
 
 export default router;
