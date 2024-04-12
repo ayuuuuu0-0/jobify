@@ -15,4 +15,3 @@ export const getApplicationStats = async (req, res) => {
 export const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "update user" });
 };
-//new commit
