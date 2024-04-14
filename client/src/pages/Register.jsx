@@ -1,13 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow } from "../components";
 import logo from "../assets/images/logo.svg";
 
+export const action = async ({ request }) => {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  return null;
+};
+
 const Register = () => {
   return (
     <Wrapper>
-      <form className="form">
+      <Form method="post" className="form">
         <img src={logo} alt="Jobers Guild" className="logo" />
         <h4>Register</h4>
         <FormRow type="text" name="name" defaultValue="john" />
@@ -30,7 +36,7 @@ const Register = () => {
             Login
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
 };
