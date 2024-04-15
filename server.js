@@ -25,7 +25,10 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World");
-  3;
+});
+
+app.get("/api/v1/test", (req, res) => {
+  res.json({ msg: "test route" });
 });
 
 app.use("/api/v1/jobs", authenticateUser, jobRouter);
