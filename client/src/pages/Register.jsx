@@ -3,6 +3,7 @@ import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow } from "../components";
 import logo from "../assets/images/logo.svg";
 import customFetch from "../utils/customFetch";
+import { toast } from "react-toastify";
 
 export const action = async ({ request }) => {
   const formData = await request.formData();
@@ -11,8 +12,10 @@ export const action = async ({ request }) => {
 
   try {
     await customFetch.post("/auth/register", data);
+    toast.success("Registered successfully");
     return redirect("/login");
   } catch (error) {
+    toast.error(error?.response?.data?.msg);
     return error;
   }
 };
