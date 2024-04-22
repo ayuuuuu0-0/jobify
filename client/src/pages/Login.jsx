@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, redirect, useNavigation } from "react-router-dom";
+import { Form, Link, redirect, useNavigation } from "react-router-dom";
 import Wrapper from "../assets/wrappers/RegisterAndLoginPage";
 import { FormRow } from "../components";
 import logo from "../assets/images/logo.svg";
@@ -12,7 +12,7 @@ export const action = async ({ request }) => {
   try {
     await customFetch.post("auth/login", data);
     toast.success("Login succesful");
-    return redirect("dasboard");
+    return redirect("/dashboard");
   } catch (error) {
     toast.error(error?.response?.data?.msg);
     return error;
@@ -24,7 +24,7 @@ const Login = () => {
   const isSubmitting = navigation.state === "submitting";
   return (
     <Wrapper>
-      <form className="form">
+      <Form method="post" className="form">
         <img src={logo} alt="Jobers Guild" className="logo" />
         <h4>login</h4>
         <FormRow type="email" name="email" defaultValue="john@gmail.com" />
@@ -41,7 +41,7 @@ const Login = () => {
             Register
           </Link>
         </p>
-      </form>
+      </Form>
     </Wrapper>
   );
 };
