@@ -47,4 +47,3 @@ const Login = () => {
 };
 
 export default Login;
-//  new commit
